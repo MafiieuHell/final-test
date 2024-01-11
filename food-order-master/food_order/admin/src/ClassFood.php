@@ -142,6 +142,21 @@ class Food {
             return false;
         }  
     }
+    public function getActivesFood() {
+        global $db;
+
+        $requete = $db->prepare("SELECT * FROM tbl_category WHERE active='yes'");
+
+        try {
+            
+            $requete->execute();
+            return $requete->fetchAll();
+        } catch (Exception $e) {
+            // Log l'erreur au lieu de l'afficher
+            error_log('Erreur dans getFoodsActive : ' . $e->getMessage());
+            return []; // Retourne un tableau vide en cas d'erreur
+        }
+    }
 
 
 

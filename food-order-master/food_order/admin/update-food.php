@@ -2,12 +2,14 @@
 include_once('partials/header.php'); 
 include('src/ClassFood.php');
 $new = new Food();
+$actives = $new->getActivesFood();
 
 if (isset($_GET['id'])) {
     //recuperer l'id de la category
     $id = $_GET["id"];
 
     $food = $new->getFood($id);
+    $current_category = $food->category_id;
 } else {
         header("location:" . SITEURL . 'admin/manage-food.php');
         }
@@ -16,30 +18,12 @@ if (isset($_GET['id'])) {
         }
         ?>
 
-        <?php
-        if (isset($_GET['id'])) {
-            $id = $_GET['id'];
-            $sql = "SELECT * FROM tbl_food WHERE id = $id";
-            //executer la query
-            $q = $db->prepare($sql);
-            
 
-            $q->execute();
-
-            $count = $q->rowCount();
-
-
-            if ($count == 1) {
-                $food = $q->fetch(PDO::FETCH_OBJ);
+           
                 
-                $current_category = $food->category_id;
-            } else {
-                header("location:" . SITEURL . 'admin/manage-food.php');
-            }
-        } else {
-            header('location:' . SITEURL . '/admin/manage-food.php');
-        }
-        ?>
+           
+   
+        
 <div class="main-content">
     <div class="wrapper">
         <h1>Update food</h1>
@@ -82,15 +66,7 @@ if (isset($_GET['id'])) {
                         <select name="category">
 
                             <?php
-                            //display active categories from db
-                            $sql = "SELECT * FROM tbl_category WHERE active='yes'";
-                            $q = $db->prepare($sql);
-                            $q->execute();
-
-                            $count = $q->rowCount();
-                            if ($count > 0) {
-                                //We have categories
-                                $actives = $q->fetchAll();
+                            if ($actives > 0) {
                             ?>
                                 <?php foreach ($actives as $active) : ?>
                                     <option <?php if($current_category==$active['id']){echo 'selected';} ?> value="<?= $active['id'] ?>"><?= $active['title'] ?></option>

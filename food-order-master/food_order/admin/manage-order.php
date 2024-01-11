@@ -1,4 +1,10 @@
-<?php include_once('partials/header.php') ?>
+<?php include_once('partials/header.php');
+include('src/ClassOrder.php');
+$order  = new Order();
+
+// Récuperation des données des admin
+$orders = $order->getOrders();
+?>
 
 <div class="main-content">
     <div class="wrapper">
@@ -22,17 +28,10 @@
                 <th>Actions</th>
 
             </tr>
-            <?php
-            $sn = 1;
-            $sql = "SELECT * FROM tbl_order ORDER BY id DESC";
-            $q = $db->query($sql);
 
-            $count = $q->rowCount();
-            if ($count > 0) {
-
-                $orders = $q->fetchAll();
-            ?>
-                <?php foreach ($orders as $order) : ?>
+                <?php
+                 $sn = 1;
+                foreach ($orders as $order) : ?>
                     <tr>
                         <td><?= $sn++; ?></td>
                         <td><?= $order['food']; ?></td>
@@ -70,11 +69,7 @@
 
                     </tr>
                 <?php endforeach; ?>
-            <?php
-            } else {
-                echo "<tr><td colspan='12 >Orders not available</td></tr>";
-            }
-            ?>
+
 
 
         </table>

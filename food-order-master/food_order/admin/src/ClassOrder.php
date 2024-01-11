@@ -41,6 +41,23 @@ class Order {
         }
     }
 
+    public function getOrders() {
+
+        global $db;
+
+        $requete = $db->prepare("SELECT * FROM tbl_order");
+
+        try {
+
+            $requete->execute();
+            return $requete->fetchAll(); 
+
+        } catch (Exception $e) {
+            // Log l'erreur au lieu de l'afficher
+            error_log('Erreur dans getAdmins : ' . $e->getMessage());
+            return []; // Retourne un tableau vide en cas d'erreur
+        }
+    }
 
     public function getOrder($id){
         global $db;

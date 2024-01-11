@@ -1,7 +1,8 @@
 <?php
 include_once('partials/header.php');
 include('src/ClassFood.php');
-
+$new = new Food();
+$actives = $new->getActivesFood();
 ?>
 <div class="main-content">
     <div class="wrapper">
@@ -52,16 +53,10 @@ include('src/ClassFood.php');
                     <td>
                         <select name="category">
                             <?php
-                            
-                            //display active categories from db
-                            $sql = "SELECT * FROM tbl_category WHERE active='yes'";
-                            $q = $db->prepare($sql);
-                            $q->execute();
 
-                            $count = $q->rowCount();
-                            if ($count > 0) {
-                                //We have categories
-                                $actives = $q->fetchAll();
+                            
+                            if ($actives > 0) {
+                             
                             ?>
                                 <?php foreach ($actives as $active) : ?>
                                     <option value="<?= $active['id'] ?>"><?= $active['title'] ?></option>

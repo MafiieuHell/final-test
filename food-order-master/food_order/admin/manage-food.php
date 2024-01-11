@@ -1,4 +1,10 @@
-<?php include_once('partials/header.php') ?>
+<?php include_once('partials/header.php');
+include('src/ClassFood.php');
+$food = new Food();
+
+// Récuperation des données des admin
+$foods = $food->getFoods();
+?>
 
 <div class="main-content">
     <div class="wrapper">
@@ -21,15 +27,10 @@
                 <th>Actions</th>
 
             </tr>
+
             <?php
             $sn = 1; // creation d'une variable pour l'affichage du SN
-            $sql = "SELECT * FROM tbl_food";
-            //On exécute la requete
-            $q = $db->query($sql);
-            $foods = $q->fetchAll();
-
-            ?>
-            <?php foreach ($foods as $food) : ?>
+            foreach ($foods as $food) : ?>
                 <tr>
                     <td><?= $sn++ ?></td>
                     <td><?= $food['title'] ?></td>

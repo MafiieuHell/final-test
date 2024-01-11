@@ -1,5 +1,9 @@
-<?php include_once('partials/header.php') ?>
+<?php include_once('partials/header.php');
+include('src/ClassCategory.php');
+$category = new Category(); 
 
+$categories = $category->getCategories();
+?>
 <div class="main-content">
     <div class="wrapper">
         <h1>Manage Categories</h1>
@@ -26,15 +30,12 @@
                 <th>Actions</th>
 
             </tr>
+ 
+            
+
             <?php
             $sn = 1; // creation d'une variable pour l'affichage du SN
-            $sql = "SELECT * FROM tbl_category";
-            //On exécute la requete
-            $q = $db->query($sql);
-            $categories = $q->fetchAll();
-
-            ?>
-            <?php foreach ($categories as $category) : ?>
+            foreach ($categories as $category) : ?>
                 <tr>
                     <td><?= $sn++ ?></td>
                     <td><?= $category['title'] ?></td>
